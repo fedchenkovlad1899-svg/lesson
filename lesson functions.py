@@ -69,3 +69,10 @@ while True:
     else:
             print('Нельзя использовать')
 
+#6
+numbers = [i for i in range(10, 100) if i % 2 != 0]
+print(numbers)
+
+#7
+numbers = [i for i in range(100, 1000) if i % 5 == 0 and i % 3 == 0]
+print(numbers)
