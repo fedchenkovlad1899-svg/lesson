@@ -76,3 +76,39 @@ print(numbers)
 #7
 numbers = [i for i in range(100, 1000) if i % 5 == 0 and i % 3 == 0]
 print(numbers)
+
+
+#8
+
+lst = list(input('введите элементы списка: ').split(','))
+lst.sort()
+def counter(lst):
+    count = 1
+    for item in range(1,len(lst)):
+        if lst[item-1] != lst[item]:
+            count += 1
+    return count
+print(lst, counter(lst))
+
+
+#9
+lst = list(map(int, input('введите числа: ').split()))
+def sum_neighb_elements(lst):
+    lst_sum = []
+    sum_n = 0
+    for index in range(len(lst)):
+        if len(lst) == 1:
+            sum_n = lst[0]
+            lst_sum.append(sum_n)
+            break
+        if index == 0:
+            sum_n = lst[1] + lst[-1]
+            lst_sum.append(sum_n)
+        elif index == len(lst)-1:
+            sum_n = lst[-2] + lst[0]
+            lst_sum.append(sum_n)
+        else:
+            sum_n = lst[index - 1] + lst[index + 1]
+            lst_sum.append(sum_n)
+    return lst_sum
+print(*sum_neighb_elements(lst))
