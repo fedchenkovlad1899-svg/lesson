@@ -91,3 +91,11 @@ print(new_lst)
 lst = ['cat','car','mouse','dog','snake','cow']
 dct = {e[0]: [el for el in lst if el[0]==e[0]] for e in lst}
 print(dct)
+
+
+#9 	Дан список кортежей (товар, цена, количество).Получить список сумм: цена * количество.
+
+lst = [('Яблоко',14.25,5),('Рыба',18.2,9),('Молоко',3.15,2),('Стейк',111.2,3)]
+sum_lst = list(map(lambda x: x[1]*x[2], lst))
+print(sum_lst)
+
