@@ -66,3 +66,62 @@ try:
 except Exception as e:
     print(f'ошибка: ', *e.args)
 
+
+'''
+3.Реализуйте класс Shop. Предусмотреть возможность работы с произвольным числом продуктов, 
+поиска продуктов по названию, добавления их в магазин и удаления продуктов из него.
+'''
+class Shop():
+    def __init__(self, product):
+        self.products = product.split(',')
+    def add(self, product):
+        self.products.append(product)
+        print(f'товар {product} добавлен')
+    def find(self, product):
+        if product in self.products:
+            print('данный товар присутствует')
+        else:
+            print('нет такого товара')
+    def remove(self, product):
+        if product in self.products:
+            self.products.remove(product)
+        print(f'товар {product} удален')
+lst_product = input('введите список продуктов: ')
+prod_shop = Shop(lst_product)
+prod_shop.add(input('добавить элемент: '))
+prod_shop.find(input('найти элемент: '))
+prod_shop.remove(input('удалить элемент: '))
+
+print(f'список товаров: ',prod_shop.products)
+
+'''
+4.Реализуйте класс MoneyBox, для работы с виртуальной копилкой. Каждая копилка имеет ограниченную 
+вместимость, которая выражается целым числом – количеством монет(capacity -вместимость), которые можно 
+положить в копилку. Класс должен поддерживать информацию о количестве монет в копилке, предоставлять
+возможность добавлять монеты в копилку и узнавать, можно ли добавить в копилку ещё какое-то количество
+монет, не превышая ее вместимость
+'''
+class MoneyBox:
+    def __init__(self, capacity:int =100):
+        self.capacity = capacity
+        self.current_v =0
+    def can_add(self,v):
+        if self.capacity - self.current_v >= v:
+            print('можно положить')
+            return True
+        else:
+            print('нельзя положить')
+            return False
+    def add(self,v):
+        if v < 0 :
+            print('НЕ БРАТЬ ИЗ КОПИЛКИ!')
+            return False
+        if self.can_add(v) == True:
+            self.current_v += v
+box = MoneyBox(capacity=100)
+while True:
+    n = int(input('сколько хотите положить в копидку? '))
+    box.add(v=n)
+    print(f'в копилке сейчас {box.current_v} монет')
+    if box.current_v == 100:
+        break
