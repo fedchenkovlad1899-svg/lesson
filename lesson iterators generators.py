@@ -45,7 +45,19 @@ for elem in fib:
 -	пропускать пустые строки
 -	возвращать строки по одной без загрузки всех данных в память
 '''
+class LogReader:
+    def __init__(self,path):
+        self.path = path
+    def __iter__(self):
+        with open(file=self.path,mode = 'r',encoding = 'UTF-8') as file:
+            for line in file:
+                line_1 = line.strip()
+                if len(line_1)>0:
+                    yield line_1
 
+logread = LogReader('D:/1.txt')
+for line in logread:
+    print(line)
 
 
 '''
