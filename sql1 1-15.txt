@@ -1,0 +1,120 @@
+1.	Создайте таблицу actors со следующими полями:
+CREATE TABLE IF NOT EXISTS actors
+(id  INTEGER PRIMARY KEY AUTOINCREMENT,
+age  INTEGER,
+sex  TEXT CHECK(sex = 'male' or sex = 'female'),
+country  TEXT,
+name TEXT NOT NULL,
+last_name  TEXT NOT NULL
+);
+
+
+2.	Добавьте колонку salary типа INTEGER.
+ALTER TABLE actors
+ADD COLUMN salary INTEGER;
+
+3.	Добавьте проверку, что age не может быть меньше 0.
+
+4.	Удалите колонку salary.
+ALTER TABLE actors
+DROP COLUMN salary;
+
+5.	Добавьте минимум 20–30 актёров из разных стран, с разным возрастом и полом.
+INSERT INTO actors (age,sex,country,name,last_name)VALUES
+(61, 'male', 'USA', 'Brad', 'Pitt'),
+(55, 'female', 'Australia', 'Cate', 'Blanchett'),
+(59, 'male', 'India', 'Shah', 'Rukh Khan'),
+(28, 'female', 'USA', 'Zendaya', 'Stoermer'),
+(59, 'male', 'Denmark', 'Mads', 'Mikkelsen'),
+(31, 'female', 'India', 'Alia', 'Bhatt'),
+(50, 'male', 'USA', 'Leonardo', 'DiCaprio'),
+(49, 'female', 'France', 'Marion', 'Cotillard'),
+(58, 'male', 'South Korea', 'Song', 'Kang-ho'),
+(22, 'female', 'USA', 'Jenna', 'Ortega'),
+(53, 'male', 'Russia', 'Konstantin', 'Khabensky'),
+(50, 'female', 'Spain', 'Penélope', 'Cruz'),
+(28, 'male', 'UK', 'Tom', 'Holland'),
+(45, 'female', 'South Korea', 'Bae', 'Doona'),
+(55, 'male', 'Spain', 'Javier', 'Bardem'),
+(41, 'female', 'Kenya', 'Lupita', 'Nyong''o'),
+(29, 'male', 'USA', 'Timothée', 'Chalamet'),
+(34, 'female', 'Australia', 'Margot', 'Robbie'),
+(37, 'male', 'Serbia', 'Miloš', 'Biković'),
+(41, 'female', 'Russia', 'Yuliya', 'Snigir'),
+(64, 'male', 'Japan', 'Hiroyuki', 'Sanada'),
+(36, 'female', 'Cuba', 'Ana', 'de Armas'),
+(52, 'male', 'UK', 'Idris', 'Elba'),
+(29, 'female', 'UK', 'Florence', 'Pugh'),
+(46, 'male', 'Germany', 'Daniel', 'Brühl'),
+(39, 'female', 'Israel', 'Gal', 'Gadot'),
+(49, 'male', 'Chile', 'Pedro', 'Pascal'),
+(62, 'female', 'Malaysia', 'Michelle', 'Yeoh'),
+(52, 'male', 'France', 'Jean', 'Dujardin'),
+(31, 'female', 'Mexico', 'Yalitza', 'Aparicio');
+
+6.	Добавьте 5 актёров только с обязательными полями (name, last_name), остальные поля оставить NULL.
+INSERT INTO actors (name,last_name) VALUES
+('Tom', 'Hardy'),
+('Scarlett', 'Johansson'),
+('Cillian', 'Murphy'),
+('Emma', 'Stone'),
+('Christian', 'Bale');
+
+7.	Установите страну "Unknown" всем актёрам, у которых она NULL.
+UPDATE actors SET country = 'Unknow'
+WHERE country IS NULL
+
+8.	Повысить возраст на 2 года всем актрисам (female) старше 40 лет.
+UPDATE actors SET age = age +2
+WHERE sex = 'female'
+
+9.	Вывести актрис из Франции младше 35 лет.
+SELECT * FROM actors 
+WHERE sex = 'female' 
+AND age < 35
+AND country = 'France'
+
+
+10.	Вывести 5 самых молодых актёров.
+SELECT * FROM actors 
+WHERE age NOT NULL AND sex = 'male'
+ORDER BY age ASC
+LIMIT 5
+
+11.	Посчитать и вывести общее количество актёров, средний возраст, минимальный и максимальный возраст
+SELECT 
+count(*) as 'количество',
+AVG(age) AS 'средний возраст',
+MIN(age) AS 'минимальный возраст',
+max(age) as 'максимальный возраст' 
+FROM actors 
+
+
+12.	Вывести страны, в которых более 5 и менее 10 актёров.
+SELECT country,count(*) as 'количество актеров'
+FROM actors 
+GROUP by country
+HAVING count(*) > 5 AND count(*) < 10
+ORDER by count(*) DESC
+
+13.	Посчитать средний возраст мужчин и женщин.
+SELECT sex,AVG(age) AS 'средний возраст'
+FROM actors 
+WHERE sex is NOT NULL
+group by sex
+
+14.	Для каждой страны вывести самого молодого актёра.
+SELECT country,name, last_name,min(age)
+FROM actors 
+WHERE age is NOT NULL
+GROUP by country
+
+
+15.	Вывести страны, в которых нет ни одной актрисы (female).
+SELECT DISTINCT country 
+FROM actors
+WHERE  country not in (
+SELECT country
+FROM actors
+WHERE sex = 'female')
+
