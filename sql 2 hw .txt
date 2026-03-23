@@ -1,0 +1,283 @@
+1.	Создать таблицы с данными согласно спроектированной схеме. Заполнить предоставленными данными.
+
+-- CREATE TABLE IF NOT EXISTS actors(
+-- actors_id INTEGER PRIMARY KEY AUTOINCREMENT,
+-- name TEXT NOT NULL,
+-- surname TEXT NOT NULL,
+-- age INTEGER,
+-- sex TEXT CHECK(sex = 'male' or sex = 'female')
+-- );
+-- CREATE TABLE IF NOT EXISTS directors(
+-- director_id INTEGER PRIMARY KEY AUTOINCREMENT,
+-- name TEXT NOT NULL,
+-- surname TEXT NOT NULL,
+-- age INTEGER,
+-- sex TEXT CHECK(sex = 'male' or sex = 'female')
+-- );
+-- 
+-- CREATE TABLE IF NOT EXISTS movies(
+-- movie_id INTEGER PRIMARY KEY AUTOINCREMENT,
+-- name_movie TEXT NOT NULL,
+-- release INTEGER,
+-- budjet INTEGER,
+-- director_id INTEGER,
+-- CONSTRAINT movie_director_fk
+-- FOREIGN KEY(director_id) REFERENCES directors(director_id)
+-- );
+CREATE TABLE IF NOT EXISTS actors_movies(
+actors_movies_id INTEGER PRIMARY KEY AUTOINCREMENT,
+movies_id INTEGER,
+actors_id INTEGER,
+CONSTRAINT fk_am_movie 
+FOREIGN KEY (movies_id) 
+REFERENCES movies(movie_id),
+CONSTRAINT fk_am_actor 
+FOREIGN KEY (actors_id) 
+REFERENCES actors(actors_id)
+);
+CREATE TABLE IF NOT EXISTS bank_accounts(
+bank_account_id INTEGER PRIMARY KEY AUTOINCREMENT,
+director_id integer,
+actors_id INTEGER,
+account_number INTEGER,
+CONSTRAINT director_bank_fk
+FOREIGN KEY (director_id) 
+REFERENCES directors(director_id),
+CONSTRAINT director_bank_fk
+FOREIGN KEY (actors_id) 
+REFERENCES actors(actors_id)
+);
+
+INSERT INTO actors (actors_id, name, surname, age, sex) VALUES 
+(1, 'Arnold', 'Schwarzenegger', 75, 'male'),
+(2, 'Bruce', 'Willis', 67, 'male'),
+(3, 'Tom', 'Cruise', 60, 'male'),
+(4, 'Brad', 'Pitt', 53, 'male'),
+(5, 'Will', 'Smith', 54, 'male'),
+(6, 'Leonardo', 'DiCaprio', 48, 'male'),
+(7, 'Tom', 'Hanks', 66, 'male'),
+(8, 'Johnny', 'Depp', 59, 'male'),
+(9, 'Harrison', 'Ford', 80, 'male'),
+(10, 'Sandra', 'Bullock', 58, 'female'),
+(11, 'Halle', 'Berry', 56, 'female'),
+(12, 'Julia', 'Roberts', 55, 'female'),
+(13, 'Kate', 'Winslet', 47, 'female'),
+(14, 'Angelina', 'Jolie', 47, 'female');
+
+INSERT INTO directors (director_id, name, surname, age, sex) VALUES 
+(1, 'James', 'Cameron', 68, 'male'),
+(2, 'Steven', 'Spilberg', 75, 'male'),
+(3, 'Robert', 'Zemeckis', 70, 'male'),
+(4, 'Doug', 'Liman', 57, 'male'),
+(5, 'Brian', 'De Palma', 82, 'male'),
+(6, 'John', 'Woo', 76, 'male'),
+(7, 'Tim', 'Berton', 64, 'male'),
+(8, 'Jan', 'De Bont', 79, 'male'),
+(9, 'Alejandro', 'Agresti', 61, 'male'),
+(10, 'Garry', 'Marshal', 82, 'male'),
+(11, 'Steven', 'Sodeberg', 59, 'male'),
+(12, 'Michael', 'Bay', 57, 'male'),
+(13, 'Barry', 'Sonnenfeld', 69, 'male'),
+(14, 'Simon', 'Kinberg', 49, 'male'),
+(15, 'Christopher', 'Nolan', 52, 'male'),
+(16, 'Martin', 'Scorsese', 80, 'male'),
+(17, 'Stanley', 'Kubrick', 70, 'male'),
+(18, 'Woody', 'Allen', 87, 'male');
+
+INSERT INTO movies (movie_id, name_movie, release, budjet, director_id) VALUES 
+(1, 'Titanic', 1997, 200000000, 1),
+(2, 'Catch me if you can', 2002, 52000000, 2),
+(3, 'Forrest Gump', 1994, 55000000, 3),
+(4, 'Terminator 2', 1991, 102000000, 1),
+(5, 'Mr. & Mrs. Smith', 2005, 110000000, 4),
+(6, 'Indiana Jones 3', 1989, 48000000, 2),
+(7, 'Mission impossible 1', 1996, 80000000, 5),
+(8, 'Mission impossible 2', 2000, 125000000, 6),
+(9, 'Charlie and the Chocolate Factory', 2005, 150000000, 7),
+(10, 'Speed', 1994, 25000000, 8),
+(11, 'Lake House', 2006, 40000000, 9),
+(12, 'Pretty women', 1990, 190000000, 10),
+(13, 'Ocean’s eleven', 2001, 184000000, 11),
+(14, 'Larry Crowne', 2011, 30000000, NULL),
+(15, 'Bad boys 1', 1995, 19000000, 12),
+(16, 'Bad boys 2', 2003, 130000000, 12),
+(17, 'Men in black', 1997, 90000000, 13),
+(18, 'The Martian', 2015, 108000000, 14),
+(19, 'Interstellar', 2014, 165000000, 15);
+
+INSERT INTO actors_movies (actors_movies_id, movies_id, actors_id) VALUES 
+(1, 1, 6),
+(2, 1, 13),
+(3, 2, 6),
+(4, 2, 7),
+(5, 3, 7),
+(6, 4, 1),
+(7, 5, 4),
+(8, 5, 14),
+(9, 6, 9),
+(10, 7, 3),
+(11, 8, 3),
+(12, 9, 8),
+(13, 10, 10),
+(14, 11, 10),
+(15, 12, 12),
+(16, 13, 4),
+(17, 13, 12),
+(18, 14, 7),
+(19, 14, 12),
+(20, 15, 5),
+(21, 16, 5),
+(22, 17, 5),
+(23, 18, NULL),
+(24, 19, NULL);
+
+
+INSERT INTO bank_accounts (bank_account_id, director_id, actors_id, account_number) VALUES 
+(1, NULL, 1, '1264567'),
+(2, NULL, 2, '1296567'),
+(3, NULL, 3, '1234567'),
+(4, NULL, 4, '1294167'),
+(5, NULL, 5, '1594567'),
+(6, NULL, 6, '1794567'),
+(7, NULL, 7, '1994567'),
+(8, NULL, 8, '2294567'),
+(9, NULL, 9, '1294567'),
+(10, NULL, 10, '2297667'),
+(11, NULL, 11, '3994567'),
+(12, NULL, 12, '4294567'),
+(13, NULL, 13, '5294567'),
+(14, NULL, 14, '6294567'),
+(15, 1, NULL, '7294567'),
+(16, 2, NULL, '8294567'),
+(17, 3, NULL, '9294567'),
+(18, 4, NULL, '1294561'),
+(19, 5, NULL, '1294562'),
+(20, 6, NULL, '1294563'),
+(21, 7, NULL, '1294564'),
+(22, 8, NULL, '1294565'),
+(23, 9, NULL, '1294566'),
+(24, 10, NULL, '1294567'),
+(25, 11, NULL, '1294568'),
+(26, 12, NULL, '1294569'),
+(27, 13, NULL, '1294521'),
+(28, 14, NULL, '1294537'),
+(29, 15, NULL, '1294547'),
+(30, 16, NULL, '1294557'),
+(31, 17, NULL, '1294557'),
+(32, 18, NULL, '1294577');
+
+2.	Добавить новое поле finance INTEGER в таблицу bank_accounts значение задать NULL.
+ALTER TABLE bank_accounts
+ADD COLUMN finance INTEGER NULL;
+
+3.	Вывести первых 10  режиссёров, которые сняли самые высокобюджетные фильмы. Режиссёры не должны повторяться.
+SELECT DISTINCT directors.name,
+directors.surname,
+movies.budjet
+FROM movies
+INNER JOIN directors ON 
+movies.director_id = directors.director_id
+ORDER BY movies.budjet DESC
+LIMIT 10
+
+4.	Вывести актёров и режиссёров, которые не участвовали не в одном из фильмов.
+SELECT actors.name,actors.surname,
+actors_movies.movies_id
+FROM actors
+LEFT JOIN actors_movies ON
+actors.actors_id = actors_movies.actors_id
+WHERE movies_id is NULL
+UNION ALL 
+SELECT directors.name,directors.surname,
+movies.director_id
+FROM directors
+LEFT JOIN movies ON 
+directors.director_id = movies.director_id
+WHERE movie_id is NULL
+
+5.	Вывести все фильмы, а также всех актёров кассовые сборы которых превысили 150000000.
+SELECT movies.name_movie,movies.budjet,
+actors.name,actors.surname
+FROM movies
+LEFT JOIN actors_movies ON
+movies.movie_id = actors_movies.movies_id
+LEFT JOIN actors ON
+actors_movies.actors_id = actors.actors_id
+WHERE budjet >150000000
+
+6.	Вывести всех режиссёров которые снимали фильмы до 2000 года. Режиссёры не должны повторятся
+SELECT DISTINCT directors.name,directors.surname
+FROM directors
+LEFT JOIN movies ON 
+directors.director_id = movies.director_id
+WHERE release < 2000
+
+7.	Добавить фильмы для актёров и режиссёров, у которых нет зависимости в таблице movies. Не забыть сделать изменения в таблице actors_movies.
+INSERT INTO movies 
+(name_movie, release, budjet, director_id) VALUES 
+('The Departed', 2006, 90000000, 16),   
+('Eyes Wide Shut', 1999, 65000000, 17), 
+('Celebrity', 1998, 12000000, 18); 
+INSERT INTO actors_movies (movies_id, actors_id) VALUES 
+(13, 2),  
+(10, 11),  
+(20, 6); 
+     
+
+8.	Добавить колонку rating к фильмам. Задать значения рейтинга фильмов. 
+ALTER TABLE movies ADD COLUMN rating REAL;
+UPDATE movies SET rating = CASE movie_id
+WHEN 1 THEN 8.5 WHEN 2 THEN 7.5 WHEN 3 THEN 8.8
+WHEN 4 THEN 8.6 WHEN 5 THEN 6.5 WHEN 7 THEN 7.5
+WHEN 8 THEN 7.5 WHEN 9 THEN 6.5 WHEN 10 THEN 5.5
+ELSE 7 END
+
+
+9.	Вывести режиссёров и фильмы с рейтингом ниже среднего до 2000 года
+SELECT directors.name,directors.surname,
+movies.name_movie,movies.rating,movies.release
+FROM directors
+LEFT JOIN movies ON  
+directors.director_id = movies.director_id
+WHERE rating <(SELECT avg(rating) FROM movies)
+ AND release <2000
+
+10.	Вывести всех актёров, которые знакомы с 2-мя и более другими актёрами.
+SELECT 
+    actors.name, 
+    actors.surname, 
+    COUNT(DISTINCT colleagues.actors_id) as 'количество коллег'
+FROM actors
+JOIN actors_movies AS my_movies 
+    ON actors.actors_id = my_movies.actors_id
+JOIN actors_movies AS colleagues 
+    ON my_movies.movies_id = colleagues.movies_id
+WHERE my_movies.actors_id != colleagues.actors_id
+GROUP BY actors.actors_id
+HAVING COUNT(DISTINCT colleagues.actors_id) >= 2;
+
+11.    Вывести первых 5 самых высокооплачиваемых актёров.
+SELECT actors.name,actors.surname,
+bank_accounts.finance
+FROM actors
+LEFT JOIN bank_accounts ON
+actors.actors_id = bank_accounts.actors_id
+ORDER BY finance DESC
+LIMIT 5
+
+12.	Вывести всех режиссёров и актёров которые были задействованы только в 1 фильме
+
+SELECT actors.name,actors.surname
+FROM actors
+INNER JOIN actors_movies ON
+actors.actors_id = actors_movies.actors_id
+GROUP BY actors.actors_id
+HAVING count(actors_movies.movies_id) =1
+UNION ALL
+SELECT directors.name,directors.surname
+FROM directors
+INNER JOIN movies ON
+directors.director_id = movies.director_id
+GROUP BY directors.director_id
+HAVING count (movies.movie_id)=1 
+
